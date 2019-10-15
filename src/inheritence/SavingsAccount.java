@@ -16,4 +16,9 @@ public class SavingsAccount extends Account {
                     + "cannot deposit negative amount.");
         }
     }
+    @Override
+    public String toString() {
+        return "Acc " + accnum + ": " + "balance = " + bal + " " + "interest = "  + interest;
+    }
+
 }

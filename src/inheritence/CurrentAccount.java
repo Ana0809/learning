@@ -22,4 +22,9 @@ public class CurrentAccount extends Account {
             System.out.println("Cannot withdraw " + sumImprumutata + " because the limit is " + limit);
         }
     }
+    @Override
+    public String toString() {
+        return "Acc " + accnum + ": " + "balance = " + bal +  " "  +"limit = " + limit;
+    }
+
 }

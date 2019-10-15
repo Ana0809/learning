@@ -9,6 +9,7 @@ public class Account {
         accnum = a;
     }
 
+
     public void deposit(double sum) {
         if (sum > 0)
             bal += sum;
