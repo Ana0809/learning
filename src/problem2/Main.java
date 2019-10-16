@@ -9,13 +9,14 @@ public class Main {
         String[] array = files.list(new FilenameFilter() {
             @Override
             public boolean accept(File dir, String name) {
-                if (name.endsWith("txt")) {
-                    return false;
-                } else
+                if(name.toLowerCase().endsWith(".txt")){
                     return true;
+                } else {
+                    return false;
+                }
             }
         });
-        for (int i = 0; i< array.length; i++) {
+        for (int i = 0; i < array.length; i++) {
             System.out.println(array[i]);
         }
     }
