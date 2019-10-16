@@ -9,8 +9,8 @@ public class Main {
         if (array.length == 0) {
             System.out.println("The directory is empty");
         } else {
-            for (String File : array) {
-                System.out.println(File);
+            for (int i =0; i<array.length; i++) {
+                System.out.println(array[i]);
             }
         }
     }

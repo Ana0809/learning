@@ -15,8 +15,8 @@ public class Main {
                     return true;
             }
         });
-        for (String File : array) {
-            System.out.println(File);
+        for (int i = 0; i< array.length; i++) {
+            System.out.println(array[i]);
         }
     }
 }
