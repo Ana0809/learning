@@ -1,8 +1,13 @@
 package problem4;
 import java.io.File;
-public class Main {
-    public static void main(String[] args) {
-        File file = new File("C:\\Users\\JohnSmith\\Documents\\Test.txt");
+import java.util.Scanner;
+
+public class PermisiuneDeCitireScriere {
+    public static void CitireScriere(){
+        System.out.println("Introdu fisier");
+        Scanner keyboard = new Scanner(System.in);
+        File file = new File(keyboard.nextLine());
+      //C:\\Users\\JohnSmith\\Documents\\Test.txt
         if(file.canRead()){
             System.out.println("Are permisiune de citire");
         }else{
