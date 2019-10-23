@@ -6,51 +6,44 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class ComparLexicografic {
-    public static void main(String[] args) throws FileNotFoundException {
-        ArrayList<String> myList = new ArrayList<>();
+    public static void PopulateListAndShowing(ArrayList<String> myList) {
         while (true) {
             try {
-                System.out.println("Introdu fisierul 1");
-                Scanner keyboard = new Scanner(System.in);
-                File file = new File(keyboard.nextLine());
-                Scanner sc = new Scanner(file);
-
+                System.out.println();
+                Scanner sc = getScannerFisiere("Introdu fisierul pentru comparare ");
                 while (sc.hasNextLine()) {
-
                     myList.add(sc.nextLine());
-
                 }
+                System.out.println("Continutul fisierului este ");
+
                 for (int i = 0; i < myList.size(); i++) {
+
                     System.out.print(" : " + myList.get(i));
                 }
-            } catch (FileNotFoundException e) {
-                System.out.println("Reintrodu alt path");
-
-            }
-            ArrayList<String> myList1 = new ArrayList<String>();
-            try {
-                System.out.println("Introdu fisierul 2");
-                Scanner keyboard1 = new Scanner(System.in);
-                File file1 = new File(keyboard1.nextLine());
-                Scanner sc = new Scanner(file1);
-
-                while (sc.hasNextLine()) {
-                    myList1.add(sc.nextLine());
-
-                }
-                for (int i = 0; i < myList1.size(); i++) {
-                    System.out.print(" : " + myList1.get(i));
-                }
+                break;
             } catch (FileNotFoundException e) {
                 System.out.println("Reintrodu alt path");
             }
-            System.out.println();
-
-            if (myList.equals(myList1)) {
-                System.out.println("Egale");
-            } else
-                System.out.println("Nu sunt egale");
-            break;
         }
     }
+
+
+    public static void printingResults(ArrayList<String> myList, ArrayList<String> myList2) {
+        System.out.println();
+        if (myList.equals(myList2)) {
+            System.out.println("Liste egale");
+            return;
+        } else {
+            System.out.println("Listele nu sunt egale");
+            return;
+        }
+    }
+
+    public static Scanner getScannerFisiere(String s) throws FileNotFoundException {
+        System.out.println(s);
+        Scanner keyboard = new Scanner(System.in);
+        File file = new File(keyboard.nextLine());
+        return new Scanner(file);
+    }
+
 }

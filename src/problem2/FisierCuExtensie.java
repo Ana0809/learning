@@ -1,22 +1,50 @@
 package problem2;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class FisierCuExtensie {
-    public static void Extensie(){
-        System.out.println("Introdu fisier");
-        Scanner keyboard = new Scanner(System.in);
-        File files = new File(keyboard.nextLine());
-        // C:\\Users\\JohnSmith\\Documents
-        String[] list = files.list();
-        for (int i = 0; i < list.length; i++) {
-            if (list[i].endsWith("txt")) {
-                System.out.println(list[i]);
-            }
+    public static void Extensie() {
+
+        while (true) {
+            System.out.println("Introdu path - ");
+            Scanner keyboard = new Scanner(System.in);
+            File file = new File(keyboard.nextLine());
+            ArrayList<String> listaCuExtensii= new ArrayList();
+            if (file.exists()) {
+                System.out.println("Introdu extensia ");
+
+                if(file.isDirectory()) {
+                    String[] fileList = file.list();
+                    String extensie = keyboard.nextLine();
+
+                    for (int i = 0; i < fileList.length; i++) {
+                        if (fileList[i].endsWith(extensie)) {
+                            listaCuExtensii.add(fileList[i]);
+                        }
+
+                    }
+                    for (int i = 0; i < listaCuExtensii.size(); i++) {
+
+                        System.out.print(" : " + listaCuExtensii.get(i));
+                    }
+                    if (listaCuExtensii.size() == 0) {
+                        System.out.println("Extensia " + extensie + " nu a fost gasita");
+                    }
+                    break;
+                }
+                else {
+                    System.out.println("Nu are o lista de fisiere, reintroduceti un director");
+                }
+            } else System.out.println("Path-ul nu este bun");
+
         }
     }
+
 }
+
+
 
 
 
