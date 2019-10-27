@@ -30,7 +30,7 @@ public class MainProbleme {
                 FisierCuExtensie.Extensie();
             } else if (n == 3) {    //C:\\Users\\JohnSmith\\Documents\\Test.txt
                 VerificaDacaExista.Verifica();
-            } else if (n == 4) {     //C:\Users\JohnSmith\Documents\Test.txt
+            } else if (n == 4) {     //:\Users\JohnSmith\Documents\Test.txtC
                 PermisiuneDeCitireScriere.CitireScriere();
             } else if
             (n == 5) {      //C:\\Users\\JohnSmith\\Documents\\Test.txt
