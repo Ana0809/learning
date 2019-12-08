@@ -4,110 +4,146 @@ import java.io.*;
 import java.util.*;
 
 public class Application1 {
+    public static String user = null;
+    public static ArrayList<Destination> destinations = new ArrayList<>();
+    public static ArrayList<Hotel> hoteluri = new ArrayList<>();
+    public static ArrayList<Hotel> hoteluri2 = new ArrayList<>();
+    public static String rol = null;
+    static String holiday = null;
+    static String booking = null;
+    static String users = null;
 
+    // static String holiday1=null;
     public static void main(String[] args) throws FileNotFoundException {
-        ArrayList<String> fileList = adaugareDinFisier();
-        ArrayList<Hotel> priceh2 = new ArrayList<>();
-        ArrayList<Hotel> ratingh2 = new ArrayList<>();
-        ArrayList<Hotel> hoteluri = new ArrayList<>();
-        ArrayList<Hotel> hoteluri2 = new ArrayList<>();
-        ArrayList<Double> preturi = new ArrayList<>();
-        ArrayList<Destination> destinations = new ArrayList<>();
-        login();
+        booking = args[2];//C:\\Users\\JohnSmith\\Documents\\booking.txt
+        // holiday = args[3];//"holiday.txt"
+        users = args[0];//"C:\\Users\\JohnSmith\\Documents\\users.txt"
+        holiday = args[1];//C:\\Users\\JohnSmith\\Documents\\holiday.txt
+        for (int i = 0; i < args.length; i++) {
+            System.out.println(args[i]);
+        }
+        ArrayList<String> fileList = adaugareDinFisier(holiday);
+        login(users);
+        metodaMain(fileList, hoteluri, hoteluri2, destinations);
+        meniuPrincipal(holiday, booking);
+    }
+
+    private static void meniuPrincipal(String holiday, String booking) {
         while (true) {
-            int n = readOption();
-            metodaMain(fileList, hoteluri, hoteluri2, destinations);
-            if (n == 1) {
-                afisareGenerala(destinations);
-            } else if (n == 2) {
-                hotelDupaPret(hoteluri2, priceh2);
-            } else if (n == 3) {
-                hotelDupaRating(hoteluri2, ratingh2);
-            } else if (n == 4) {
-                hoteluriPretEgal(hoteluri);
-//            } else if (n == 5) {
-//                hotelOrdAceiasiLista(hoteluri);
-            } else if (n == 5) {
-                dacaTaraExista(destinations);
-            } else if (n == 6) {
-                oferaRating(destinations);
-            } else if (n == 7) {
-                rezervaCamere();
-            } else if (n == 8) {
-                insertHotel();
-            } else if (n == 9) {
-                modificaPret();
-            } else if (n == 10) {
-                modificaNrCamere();
-            } else if (n >= 20) {
-                System.out.println("Optiunea nu exista!");
-            } else if (n == 0) {
-                logout();
-                break;
+            try {
+                if ("admin".equals(rol)) {
+                    meniuAdmin();
+                }
+                if ("client".equals(rol)) {
+                    meniuClienti();
+                }
+                int n = readOption();
+
+                if (n == 8) {
+                    insertHotel(holiday);
+                } else if (n == 9) {
+                    modificaPret(holiday);
+                } else if (n == 10) {
+                    modificaNrCamere(holiday);
+                }
+                if (n == 1) {
+                    afisareGenerala(destinations);
+                } else if (n == 2) {
+                    hotelDupaPret(hoteluri2);
+                } else if (n == 3) {
+                    hotelDupaRating(hoteluri2);
+                } else if (n == 4) {
+                    hoteluriPretEgal(hoteluri);
+                } else if (n == 5) {
+                    dacaTaraExista(destinations);
+                } else if (n == 6) {
+                    oferaRating(destinations, holiday, booking);
+                } else if (n == 7) {
+                    rezervaCamere(holiday, booking);
+                } else if (n >= 12) {
+                    System.out.println("Optiunea nu exista!");
+                } else if (n == 0) {
+                    logout();
+                }
+            } catch (Exception e) {
+                System.out.println("Datele de login gresite");
             }
         }
     }
 
     private static int readOption() {
-        Scanner s = new Scanner(System.in);
-        System.out.println("Introduceti cifra corespunzatoare optiunii dorite: ");
-        return s.nextInt();
+        while (true) {
+            try {
+                Scanner s = new Scanner(System.in);
+                System.out.println("Introduceti cifra corespunzatoare optiunii dorite: ");
+                return s.nextInt();
+            } catch (Exception e) {
+                System.out.println("Trebuie sa introduci o cifra");
+            }
+        }
     }
+
 
     private static void logout() {
         while (true) {
-            System.out.println("Te-ai delogat!");
+            System.out.println("Ai iesit din meniu!");
             break;
+        }
+        try {
+            login(users);
+        } catch (FileNotFoundException e) {
+            System.out.println("Nu s-a gasit fisierul");
+            ;
         }
     }
 
-    private static void login() throws FileNotFoundException {
-        while (true) {
-            System.out.println("Bine ai venit, te rugam sa te loghezi!");
-            System.out.println("Useranme");
-            Scanner keyboard = new Scanner(System.in);
-            String user = keyboard.nextLine();
-            System.out.println("Password");
-            String parola = keyboard.nextLine();
-            File file = new File("C:\\Users\\JohnSmith\\Documents\\users.txt");
-            Scanner sc = new Scanner(file);
-            boolean b = true;
-            String rol = null;
-            while (sc.hasNextLine()) {
-                if (user.equals(sc.nextLine())) {
-                    if (parola.equals(sc.nextLine())) {
-                        b = false;
-                        rol = sc.nextLine();
-                        break;
-                    }
+    private static void meniuAdmin() {
+        System.out.println("Meniul pentru admin:");
+        System.out.println("0.Iesi din meniu");
+        System.out.println("8.Adauga hotel");
+        System.out.println("9. Modifica pretul unui hotel");
+        System.out.println("10. Modifica numarul de camere");
+    }
+
+    private static void meniuClienti() {
+        System.out.println("Meniu pentru client:");
+        System.out.println("0.Iesi din meniu");
+        System.out.println("1.Afisare a listei de destinatii cu hoteluri");
+        System.out.println("2.Afisare hoteluri dupa pret");
+        System.out.println("3.Afisare hoteluri dupa rating");
+        System.out.println("4.Afisare hoteluri cu preturi egale");
+        System.out.println("5.Verifica daca destinatia dorita exista in lista noastra");
+        System.out.println("6.Ofera rating");
+        System.out.println("7.Rezerva Camere");
+    }
+
+
+    private static void login(String users) throws FileNotFoundException {
+        System.out.println("Bine ai venit, te rugam sa te loghezi!");
+        System.out.println("Useranme");
+        Scanner keyboard = new Scanner(System.in);
+        user = keyboard.nextLine();
+        System.out.println("Password");
+        String parola = keyboard.nextLine();
+        File file = new File(users);
+        Scanner sc = new Scanner(file);
+        boolean b = true;
+        while (sc.hasNextLine()) {
+            if (user.equals(sc.nextLine())) {
+                if (parola.equals(sc.nextLine())) {
+                    b = false;
+                    rol = sc.nextLine();
+                    break;
                 }
             }
-            if (b == false) {
-                System.out.println("Rolul este " + rol);
-            } else System.out.println("Nu esti in lista noastra, reintrodu datele!");
-            if ("admin".equals(rol)) {
-                System.out.println("Meniul pentru admin:");
-                System.out.println("8.Adauga hotel");
-                System.out.println("9. Modifica pretul unui hotel");
-                System.out.println("10. Modifica numarul de camere");
-                System.out.println("Pentru logout introdu 0");
-                break;
-            }
-            if ("client".equals(rol)) {
-                System.out.println("Meniu pentru client:");
-                System.out.println("1.Afisare a listei de destinatii cu hoteluri");
-                System.out.println("2.Afisare hoteluri dupa pret");
-                System.out.println("3.Afisare hoteluri dupa rating");
-                System.out.println("4.Afisare hoteluri cu preturi egale");
-                // System.out.println("5.Afisare hoteluri din aceiasi lista");
-                System.out.println("5.Verifica daca destinatia dorita exista in lista noastra");
-                System.out.println("6.Ofera rating");
-                System.out.println("7.Rezerva Camere");
-                System.out.println("Pentru logout introdu 0");
-                break;
-            }
-
         }
+        if (b == false) {
+            System.out.println("Rolul este " + rol);
+        } else {
+            System.out.println("Datele introduse nu sunt corecte, reintrodu!");
+            login(users);
+        }
+
     }
 
     private static void metodaMain(ArrayList<String> fileList, ArrayList<Hotel> hoteluri, ArrayList<Hotel> hoteluri2, ArrayList<Destination> destinations) {
@@ -138,7 +174,7 @@ public class Application1 {
 
                                     if (st.startsWith("R-")) {
                                         String v[] = st.split("-");
-                                        int rating = Integer.parseInt(v[1]);
+                                        double rating = Double.parseDouble(v[1]);
                                         h.setRating(rating);
                                     }
                                     if (st.startsWith("NC-")) {
@@ -185,8 +221,8 @@ public class Application1 {
         }
     }
 
-    private static ArrayList<String> adaugareDinFisier() throws FileNotFoundException {
-        File file = new File("holiday.txt");
+    private static ArrayList<String> adaugareDinFisier(String holiday) throws FileNotFoundException {
+        File file = new File(holiday);//"holiday.txt"
         ArrayList<String> fileList = new ArrayList<>();
         Scanner in = new Scanner(file);
         while (in.hasNextLine()) {
@@ -254,7 +290,8 @@ public class Application1 {
         }
     }
 
-    private static void hotelDupaRating(ArrayList<Hotel> hoteluri2, ArrayList<Hotel> ratingh2) {
+    private static void hotelDupaRating(ArrayList<Hotel> hoteluri2) {
+        ArrayList<Hotel> ratingh2 = new ArrayList<>();
         System.out.println("Hotelurile mele dupa rating");
         for (int i = 0; i < hoteluri2.size(); i++) {
             for (int j = i + 1; j < hoteluri2.size(); j++) {
@@ -272,7 +309,8 @@ public class Application1 {
         }
     }
 
-    private static void hotelDupaPret(ArrayList<Hotel> hoteluri2, ArrayList<Hotel> priceh2) {
+    private static void hotelDupaPret(ArrayList<Hotel> hoteluri2) {
+        ArrayList<Hotel> priceh2 = new ArrayList<>();
         System.out.println("Hotelurile mele dupa pret:");
         for (int i = 0; i < hoteluri2.size(); i++) {
             for (int j = i + 1; j < hoteluri2.size(); j++) {
@@ -341,14 +379,14 @@ public class Application1 {
         }
     }
 
-    private static void modificaPret() {
+    private static void modificaPret(String holiday) {
         ArrayList<String> lista = new ArrayList<>();
         int pozitieHotel = 0;
         int pret = 0;
         Scanner keyboard = new Scanner(System.in);
         try {
             try {
-                FileReader fr = new FileReader("C:\\\\Users\\\\JohnSmith\\\\Documents\\\\holiday.txt");
+                FileReader fr = new FileReader(holiday);
                 Scanner reader = new Scanner(fr);
 
                 System.out.println("Introduceti numele Hotelui");
@@ -363,10 +401,15 @@ public class Application1 {
                         pozitieHotel = lista.indexOf(linie);
                     } else lista.add(linie);
                 }
-                fr.close();
+                try {
+                    fr.close();
+                } catch (IOException e) {
+                }
             } catch (FileNotFoundException e) {
+                System.out.println("Fisierul nu exista");
             }
-        } catch (Exception e) {
+        } catch (NoSuchElementException e) {
+            // System.out.println("Nu sunt linii de citit");
         }
         try {
             if (pozitieHotel > 0) {
@@ -382,33 +425,48 @@ public class Application1 {
 
         for (int i = 0; i < lista.size(); i++) {
             if (pozitieHotel > 0) {
-                lista.remove(pozitieHotel + 3);
-                lista.add(pozitieHotel + 3, "P-" + pret);
-                System.out.println("Pretul hotelului a fost modificat");
-                break;
+                if (pret > 0) {
+                    lista.remove(pozitieHotel + 3);
+                    lista.add(pozitieHotel + 3, "P-" + pret);
+                    System.out.println("Pretul hotelului a fost modificat");
+                    break;
+                }
             }
         }
         try {
             try {
-                PrintWriter pr = new PrintWriter("C:\\\\Users\\\\JohnSmith\\\\Documents\\\\holiday.txt");
+                PrintWriter pr = new PrintWriter(holiday);
                 for (int i = 0; i < lista.size(); i++) {
                     pr.println((lista.get(i)));
                 }
                 pr.close();
-            } catch (Exception e) {
+                for (int k = 0; k < destinations.size(); k++) {
+                    Destination d = destinations.get(k);
+                    for (int l = 0; l < d.getCities().size(); l++) {
+                        City c = d.getCities().get(l);
+                        for (int b = 0; b < c.getHotels().size(); b++) {
+                            if (c.getHotels().get(b).getName().equals(lista.get(pozitieHotel))) {
+                                c.getHotels().get(b).setPrice(pret);
+                                //  System.out.println(c.getHotels().get(b).getName());
+                            }
+                        }
+                    }
+                }
+            } catch (FileNotFoundException e) {
+                System.out.println("Fisierul nu exista");
             }
         } catch (Exception e) {
         }
     }
 
-    private static void modificaNrCamere() {
+    private static void modificaNrCamere(String holiday) {
         ArrayList<String> lista = new ArrayList<>();
         int pozitieHotel = 0;
-        String camere = null;
+        int camere = 0;
         Scanner keyboard = new Scanner(System.in);
         try {
             try {
-                FileReader fr = new FileReader("C:\\\\Users\\\\JohnSmith\\\\Documents\\\\holiday.txt");
+                FileReader fr = new FileReader(holiday);
                 Scanner reader = new Scanner(fr);
                 System.out.println("Introduceti numele Hotelui");
                 String hotel = keyboard.nextLine();
@@ -421,94 +479,179 @@ public class Application1 {
                         pozitieHotel = lista.indexOf(linie);
                     } else lista.add(linie);
                 }
-                fr.close();
+                try {
+                    fr.close();
+
+                } catch (IOException e) {
+                }
             } catch (FileNotFoundException e) {
+                System.out.println("Fisierul nu exista");
             }
-        } catch (Exception e) {
+        } catch (NoSuchElementException e) {
+            //   System.out.println("Nu sunt linii de citit");
         }
-        if (pozitieHotel > 0) {
-            System.out.println("Introduceti noul numar de camere al hotelului");
-            camere = keyboard.nextLine();
-        } else {
-            System.out.println("Nu exista hotelul");
+
+        try {
+            if (pozitieHotel > 0) {
+                System.out.println("Introduceti noul numar de camere al hotelului");
+                camere = keyboard.nextInt();
+            } else {
+                System.out.println("Nu exista hotelul");
+
+            }
+        } catch (InputMismatchException e) {
+            System.out.println("Trebuie introdus un numar");
         }
+
         for (int i = 0; i < lista.size(); i++) {
             if (pozitieHotel > 0) {
-                lista.remove(pozitieHotel + 2);
-                lista.add(pozitieHotel + 2, "NC-" + camere);
-                System.out.println("Numarul de camere a fost schimbat!");
-                break;
+                if (camere > 0) {
+                    lista.remove(pozitieHotel + 2);
+                    lista.add(pozitieHotel + 2, "NC-" + camere);
+                    System.out.println("Numarul de camere a fost schimbat!");
+                    break;
+                }
             }
         }
         try {
             try {
-                PrintWriter pr = new PrintWriter("C:\\\\Users\\\\JohnSmith\\\\Documents\\\\holiday.txt");
+                PrintWriter pr = new PrintWriter(holiday);
                 for (int i = 0; i < lista.size(); i++) {
                     pr.println((lista.get(i)));
                 }
                 pr.close();
-
-            } catch (Exception e) {
-
-            }
-        } catch (Exception e) {
-        }
-    }
-
-    private static void insertHotel() {
-        ArrayList<String> lista = new ArrayList<>();
-        try {
-            try {
-                FileReader fr = new FileReader("C:\\\\Users\\\\JohnSmith\\\\Documents\\\\holiday.txt");
-                Scanner reader = new Scanner(fr);
-                Scanner keyboard = new Scanner(System.in);
-                System.out.println("Introduceti orasul unde vreti sa adaugati hotelul");
-                String oras = keyboard.nextLine();
-                System.out.println("Introduceti numele Hotelui nou");
-                String hotel = keyboard.nextLine();
-                System.out.println("Introduceti ratingul hotelului");
-                String rating = keyboard.nextLine();
-                System.out.println("Introduceti numarul de camere disponibile");
-                String numarCamere = keyboard.nextLine();
-                System.out.println("Introduceti pretul hotelului");
-                String pret = keyboard.nextLine();
-                String linie;
-                String[] elementLinie;
-                while ((linie = reader.nextLine()) != null) {
-                    elementLinie = linie.split("-");
-                    if (elementLinie[1].equals(oras)) {
-                        lista.add(elementLinie[0] + "-" + elementLinie[1]);
-                        lista.add("H-" + hotel);
-                        lista.add("R-" + rating);
-                        lista.add("NC-" + numarCamere);
-                        lista.add("P-" + pret);
-
-                    } else lista.add(linie);
+                pr.close();
+                for (int k = 0; k < destinations.size(); k++) {
+                    Destination d = destinations.get(k);
+                    for (int l = 0; l < d.getCities().size(); l++) {
+                        City c = d.getCities().get(l);
+                        for (int b = 0; b < c.getHotels().size(); b++) {
+                            if (c.getHotels().get(b).getName().equals(lista.get(pozitieHotel))) {
+                                c.getHotels().get(b).setAvailableRooms(camere);
+                                //  System.out.println(c.getHotels().get(b).getName());
+                            }
+                        }
+                    }
                 }
-                fr.close();
 
             } catch (FileNotFoundException e) {
+                System.out.println("Fisierul nu exista");
             }
         } catch (Exception e) {
-
-        }
-        try {
-            try {
-                PrintWriter pr = new PrintWriter("C:\\\\Users\\\\JohnSmith\\\\Documents\\\\holiday.txt");
-                for (int i = 0; i < lista.size(); i++) {
-                    pr.println((lista.get(i)));
-                }
-                pr.close();
-
-            } catch (Exception e) {
-
-            }
-        } catch (Exception e) {
-
         }
     }
 
-    private static void oferaRating(ArrayList<Destination> destinations) {
+    private static void insertHotel(String holiday) {
+        ArrayList<String> lista = new ArrayList<>();
+        while (true) {
+            String oras = null;
+            boolean pozitieOras = true;
+            int numarCamere = 0;
+            int rating = 0;
+            String hotel;
+            int pret;
+            Hotel deAdaugat =null;
+            try {
+                try {
+                    try {
+                        FileReader fr = new FileReader(holiday);
+                        Scanner reader = new Scanner(fr);
+                        Scanner keyboard = new Scanner(System.in);
+                        System.out.println("Introduceti orasul unde vreti sa adaugati hotelul");
+                        System.out.println("GATA daca nu mai doresti sa mai adaugi");
+                        oras = keyboard.nextLine();
+                        if (oras.equals("GATA")) {
+                            break;
+                        }
+                        System.out.println("Introduceti numele Hotelui nou");
+                        hotel = keyboard.nextLine();
+                        System.out.println("Introduceti ratingul hotelului");
+                        rating = keyboard.nextInt();
+                        System.out.println("Introduceti numarul de camere disponibile");
+                        numarCamere = keyboard.nextInt();
+                        System.out.println("Introduceti pretul hotelului");
+                        pret = keyboard.nextInt();
+                        String linie;
+                        String[] elementLinie;
+                        while ((linie = reader.nextLine()) != null) {
+                            elementLinie = linie.split("-");
+                            if (elementLinie[1].equals(oras)) {
+                                deAdaugat = new Hotel();
+                                pozitieOras = false;
+                                lista.add(elementLinie[0] + "-" + elementLinie[1]);
+                                lista.add("H-" + hotel);
+                                lista.add("R-" + rating);
+                                lista.add("NC-" + numarCamere);
+                                lista.add("P-" + pret);
+                                deAdaugat.setName("H-"+hotel);
+                                deAdaugat.setRating(rating);
+                                deAdaugat.setAvailableRooms(numarCamere);
+                                deAdaugat.setPrice(pret);
+                                System.out.println("Hotel adaugat!");
+                            } else lista.add(linie);
+                        }
+                        if (pozitieOras == true) {
+                            System.out.println("Orasul nu exista ca sa adaugati hotelul");
+                        }
+                        try {
+                            fr.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                    } catch (FileNotFoundException e) {
+                        System.out.println("Fisierul nu a fost gasit!");
+                    }
+                } catch (InputMismatchException ex) {
+                    System.out.println("Trebuie introdusa o cifra");
+                }
+
+            } catch (NoSuchElementException ex) {
+                // System.out.println("S-au terminat de citit liniile");
+            }
+
+            try {
+                if ((pozitieOras == false) && (numarCamere > 0) && (rating > 0)) {
+
+                    try {
+                        try {
+
+                            PrintWriter fr = new PrintWriter(holiday);
+                            for (int i = 0; i < lista.size(); i++) {
+                                fr.println((lista.get(i)));
+                            }
+                            fr.close();
+
+
+                            for (int k = 0; k < destinations.size(); k++) {
+                                Destination d = destinations.get(k);
+                                for (int l = 0; l < d.getCities().size(); l++) {
+                                    City c = d.getCities().get(l);
+                                    if (d.getCities().get(l).getName().equals("CY-"+oras)) {
+                                            c.getHotels().add(deAdaugat);
+                                            hoteluri.add(deAdaugat);
+                                            hoteluri2.add(deAdaugat);
+                                        }
+                                    }
+                                }
+
+                            break;
+
+                        } catch (FileNotFoundException e) {
+                            System.out.println("Fisierul nu exista");
+
+                        }
+                    } catch (Exception e) {
+
+                    }
+                } else System.out.println("Nu se poate adauga hotelul, datele sunt incorecte");
+            } catch (NumberFormatException e) {
+                System.out.println("Datele nu corespund tipului lor");
+            }
+        }
+    }
+
+    private static void oferaRating(ArrayList<Destination> destinations, String holiday, String booking) {
         ArrayList<String> lista = new ArrayList<>();
         int pozitieHotel = 0;
         int rating = 0;
@@ -518,11 +661,14 @@ public class Application1 {
         String[] elementLinie = new String[0];
         String[] element = new String[0];
         String linie = null;
+        ArrayList<String> lista2 = new ArrayList<>();
+        int pozitieLinie = 0;
+        Double a = 0.0;
         try {
             try {
-                FileReader fr = new FileReader("C:\\\\Users\\\\JohnSmith\\\\Documents\\\\holiday.txt");
+                FileReader fr = new FileReader(holiday);
                 Scanner reader = new Scanner(fr);
-                System.out.println("Introduceti numele Hotelui caruia sa ii ofeiti rating");
+                System.out.println("Introduceti numele Hotelui la care ati fost cazat pentru a ii ofeiti rating");
                 hotel = keyboard.nextLine();
                 while ((linie = reader.nextLine()) != null) {
                     elementLinie = linie.split("-");
@@ -533,74 +679,117 @@ public class Application1 {
                 }
                 fr.close();
             } catch (FileNotFoundException e) {
+                System.out.println("Fisierul nu exista");
             }
         } catch (Exception e) {
         }
         try {
             try {
-                ArrayList<String> lista2 = new ArrayList<>();
-                FileReader fr = new FileReader("C:\\\\Users\\\\JohnSmith\\\\Documents\\\\booking.txt");
+
+                FileReader fr = new FileReader(booking);
                 Scanner reader = new Scanner(fr);
                 while ((linie = reader.nextLine()) != null) {
-                    element = linie.split("-");
-                    if (element[1].equals(hotel)) {
-                        hotel2 = element[1];
-                    } else lista2.add(linie);
+                    lista2.add(linie);
+                    if (linie.equals(hotel)) {
+                        hotel2 = linie;
+                        pozitieLinie = lista2.indexOf(linie);
+                    }
                 }
                 fr.close();
             } catch (FileNotFoundException e) {
+                System.out.println("Fisierul nu a fost gasit");
             }
         } catch (Exception e) {
         }
-        if (hotel.equals(hotel2)) {
-            System.out.println("Oferiti rating hotelului la care ati fost cazat");
-            rating = keyboard.nextInt();
-
-        } else {
-            System.out.println("Nu exista hotelul");
-        }
-        for (int i = 0; i < lista.size(); i++) {
-            if (pozitieHotel > 0) {
-                element = lista.get(pozitieHotel + 1).split("-");
-                Double ratingInitial = Double.parseDouble(element[1]);
-                lista.remove(pozitieHotel + 1);
-                lista.add(pozitieHotel + 1, "R-" + (rating + ratingInitial) / 2);
-                System.out.println("Rating oferit!");
-                break;
+        try {
+            Map<String, Set<String>> h = new HashMap<>();
+            for (int i = 0; i < lista2.size(); i = i + 2) {
+                if (h.get(lista2.get(i)) == null) {
+                    h.put(lista2.get(i), new HashSet<>());
+                    h.get(lista2.get(i)).add(lista2.get(i + 1));
+                } else {
+                    h.get(lista2.get(i)).add(lista2.get(i + 1));
+                }
             }
+            if (h.get(hotel) != null) {
+                if (h.get(hotel).contains(user)) {
+                    System.out.println("Ofera rating");
+                    rating = keyboard.nextInt();
+                    if (rating < 0) {
+                        if (rating > 11) {
+                            System.out.println("Ratingul trebuie sa fie cuprins intre 0 si 10");
+                        }
+                        System.out.println("Ratingul trebuie sa fie cuprins intre 0 si 10");
+                    }
+                } else {
+                    System.out.println("Nu ati stat la acest hotel");
+                }
+                for (int i = 0; i < lista.size(); i++) {
+                    if (pozitieHotel > 0) {
+                        if (rating > 0 && rating < 11) {
+                            element = lista.get(pozitieHotel + 1).split("-");
+                            Double ratingInitial = Double.parseDouble(element[1]);
+                            lista.remove(pozitieHotel + 1);
+                            lista.add(pozitieHotel + 1, "R-" + (rating + ratingInitial) / 2);
+                            a = (rating + ratingInitial) / 2;
+                            break;
+
+                        }
+                    }
+                }
+            } else System.out.println("Nu exista hotelul");
+        } catch (InputMismatchException e) {
+            System.out.println("Trebuie introdusa o cifra");
         }
 
         try {
             try {
-                PrintWriter pr = new PrintWriter("C:\\\\Users\\\\JohnSmith\\\\Documents\\\\holiday.txt");
-                for (int i = 0; i < lista.size(); i++) {
-                    pr.println((lista.get(i)));
+                if (pozitieHotel > 0 && rating > 0 && rating < 11) {
+                    PrintWriter pr = new PrintWriter(holiday);
+                    for (int i = 0; i < lista.size(); i++) {
+                        pr.println((lista.get(i)));
+                    }
+                    System.out.println("Rating oferit!");
+                    pr.close();
+                    for (int k = 0; k < destinations.size(); k++) {
+                        Destination d = destinations.get(k);
+                        for (int l = 0; l < d.getCities().size(); l++) {
+                            City c = d.getCities().get(l);
+                            for (int b = 0; b < c.getHotels().size(); b++) {
+                                if (c.getHotels().get(b).getName().equals("H-" + hotel)) {
+                                    c.getHotels().get(b).setRating(a);
+                                    //  System.out.println(c.getHotels().get(b).getName());
+                                }
+                            }
+                        }
+                    }
                 }
-                pr.close();
 
-            } catch (Exception e) {
-
+            } catch (FileNotFoundException ex) {
+                System.out.println("Fisierul nu exista");
             }
         } catch (Exception e) {
         }
     }
 
-    private static void rezervaCamere() {
+    private static void rezervaCamere(String holiday, String booking) {
         ArrayList<String> lista = new ArrayList<>();
-        int pozitieHotel = 0;
+        int pozitieHotel = -1;
         String camere = null;
         Scanner keyboard = new Scanner(System.in);
         String linie = null;
-        String[] elementLinie = new String[0];
+        String[] elementLinie;
         String hotel = null;
-        String nume = null;
+        int nrCamereRezervate = 0;
+        int rezultat = 0;
+        boolean nuRezervare = false;
         try {
             try {
-                FileReader fr = new FileReader("C:\\\\Users\\\\JohnSmith\\\\Documents\\\\holiday.txt");
+                FileReader fr = new FileReader(holiday);
                 Scanner reader = new Scanner(fr);
                 System.out.println("Introduceti numele Hotelui");
                 hotel = keyboard.nextLine();
-                while ((linie = reader.nextLine()) != null) {
+                while (reader.hasNextLine() && (linie = reader.nextLine()) != null) {
                     elementLinie = linie.split("-");
                     if (elementLinie[1].equals(hotel)) {
                         lista.add(elementLinie[0] + "-" + elementLinie[1]);
@@ -612,24 +801,28 @@ public class Application1 {
             }
         } catch (Exception e) {
         }
-        if (pozitieHotel > 0) {
+        if (pozitieHotel >= 0) {
             System.out.println("Introduceti cate camere doriti sa rezervati?");
-            camere = keyboard.nextLine();
-            int nrCamereRezervate = Integer.parseInt(camere);
-            System.out.println("Care este numele dvs?");
-            nume = keyboard.nextLine();
+            try {
+                camere = keyboard.nextLine();
+                nrCamereRezervate = Integer.parseInt(camere);
+
+            } catch (NumberFormatException ex) {
+                System.out.println("Trebuie introdusa cifra");
+                nuRezervare = true;
+            }
+
             for (int i = 0; i < lista.size(); i++) {
                 elementLinie = lista.get(pozitieHotel + 2).split("-");
                 if (elementLinie[1] != null) {
                     int nrCamereInitiale = (Integer.valueOf(elementLinie[1]));
                     lista.remove(pozitieHotel + 2);
-                    int rezultat = nrCamereInitiale - nrCamereRezervate;
+                    rezultat = nrCamereInitiale - nrCamereRezervate;
                     if (rezultat >= 0) {
                         lista.add(pozitieHotel + 2, "NC-" + rezultat);
-                        System.out.println("Rezervat!");
                         break;
                     } else {
-                        System.out.println("Nu este disponibil numarul de camere, lipsesc " + rezultat + " camere");
+                        System.out.println("Nu va putem caza, numarul de camere nu este disponibil, ne mai trebuie " + rezultat + " camere");
                         lista.add(pozitieHotel + 2, "NC-" + elementLinie[1]);
                         break;
                     }
@@ -642,39 +835,57 @@ public class Application1 {
         }
         try {
             try {
-                PrintWriter pr = new PrintWriter("C:\\\\Users\\\\JohnSmith\\\\Documents\\\\holiday.txt");
+                PrintWriter pr = new PrintWriter(holiday);
                 for (int i = 0; i < lista.size(); i++) {
                     pr.println((lista.get(i)));
                 }
                 pr.close();
             } catch (Exception e) {
+                System.out.println("Nu s-a gasit fisierul");
             }
         } catch (Exception e) {
         }
-        try {
-            FileReader fisier = new FileReader("C:\\\\Users\\\\JohnSmith\\\\Documents\\\\booking.txt");
-            ArrayList<String> lista2 = new ArrayList<>();
-            lista2.add("Nume-" + nume);
-            lista2.add("H-" + hotel);
-            lista2.add(" camere-" + camere);
-            fisier.close();
+        if (pozitieHotel >= 0 && nuRezervare == false && rezultat >= 0) {
             try {
+                FileReader fisier = new FileReader(booking);
+                ArrayList<String> lista2 = new ArrayList<>();
+                lista2.add(hotel);
+                lista2.add(user);
+                System.out.println("Rezervat!");
+                fisier.close();
+
                 try {
-                    FileWriter fileWriter = new FileWriter("C:\\\\Users\\\\JohnSmith\\\\Documents\\\\booking.txt", true); //Set true for append mode
-                    PrintWriter printWriter = new PrintWriter(fileWriter);
-                    for (int i = 0; i < lista2.size(); i++) {
-                        printWriter.println((lista2.get(i)));
+                    try {
+                        FileWriter fileWriter = new FileWriter(booking, true); //Set true for append mode
+                        PrintWriter printWriter = new PrintWriter(fileWriter);
+                        for (int i = 0; i < lista2.size(); i++) {
+                            printWriter.println((lista2.get(i)));
+                        }
+                        printWriter.close();
+                        for (int k = 0; k < destinations.size(); k++) {
+                            Destination d = destinations.get(k);
+                            for (int l = 0; l < d.getCities().size(); l++) {
+                                City c = d.getCities().get(l);
+                                for (int b = 0; b < c.getHotels().size(); b++) {
+                                    if (c.getHotels().get(b).getName().equals("H-" + hotel)) {
+                                        c.getHotels().get(b).setAvailableRooms(rezultat);
+                                        // System.out.println(c.getHotels().get(b).getName());
+                                    }
+                                }
+                            }
+                        }
+
+                    } catch (Exception e) {
                     }
-                    printWriter.close();
                 } catch (Exception e) {
                 }
-            } catch (Exception e) {
+            } catch (FileNotFoundException e) {
+                System.out.println("Nu exista fisierul");
+                ;
+            } catch (IOException e) {
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        } else
+            System.out.println("Nu s-a adaugat rezervarea");
     }
 
 }

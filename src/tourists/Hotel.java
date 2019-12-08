@@ -1,16 +1,16 @@
 package tourists;
 
 public class Hotel {
-    private int availableRooms;
+    private double availableRooms;
     private double price;
     private String name;
     private double rating;
 
-    public int getAvailableRooms() {
+    public double getAvailableRooms() {
         return availableRooms;
     }
 
-    public void setAvailableRooms(int availableRooms) {
+    public void setAvailableRooms(double availableRooms) {
         this.availableRooms = availableRooms;
     }
 
