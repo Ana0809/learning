@@ -8,7 +8,7 @@ public class Application1 {
     public static ArrayList<Destination> destinations = new ArrayList<>();
     public static ArrayList<Hotel> hoteluri = new ArrayList<>();
     public static ArrayList<Hotel> hoteluri2 = new ArrayList<>();
-    public static String rol = null;
+    static String rol = null;
     static String holiday = null;
     static String booking = null;
     static String users = null;
@@ -685,7 +685,6 @@ public class Application1 {
         }
         try {
             try {
-
                 FileReader fr = new FileReader(booking);
                 Scanner reader = new Scanner(fr);
                 while ((linie = reader.nextLine()) != null) {
