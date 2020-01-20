@@ -1,10 +1,12 @@
 package ArrayListImplementation;
 
-    interface List {
-       int get(int index) throws Exception;
-        void put(int index, int value);
-        int length();
-        boolean contains(int value);
-        void addAll(List other);
-    }
+interface List <T>{
+    void add(T value) ;
+    int get(int index);
+    void put(int index, T value);
+    int length();
+    boolean contains(int value);
+    void addAll(List<T> other);
+}
+
 
