@@ -11,5 +11,6 @@ public class MainComplex {
         System.out.println("Suma "+add);
         System.out.println("Negativ "+negate);
         System.out.println("Inmultire "+ multiply);
+        Complex.create(5,4.3);
     }
 }

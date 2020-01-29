@@ -43,9 +43,11 @@ public class Complex {
     public String toString() {
         return real + " + " + i + "i";
     }
-//    static Complex create(double realPart, double imaginaryPart){
-//
-//    }
+
+    static Complex create(double realPart, double imaginaryPart){
+        Complex nr=new Complex(realPart,imaginaryPart);
+        return nr;
+    }
 }
 
 
