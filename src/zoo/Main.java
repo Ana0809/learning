@@ -1,12 +1,16 @@
 package zoo;
 
 public class Main {
-
     public static void main(String[] args) {
-        Map m = new Map();
-        m.meniu();
-
+        Afisari a = new Afisari();
+        a.adaugare();
+        a.afisareNrAnimale();
+        a.aisareCuloare();
+    //    a.stergere();
+        a.afisareNrAnimale();
     }
-
-
 }
+
+
+
+

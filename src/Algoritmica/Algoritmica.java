@@ -9,6 +9,8 @@ public class Algoritmica {
         elemente.add(4);
         elemente.add(5);
         elemente.add(4);
+
+        elemente.contains(4);
         Scanner k= new Scanner(System.in);
         int x = k.nextInt();
         int i;

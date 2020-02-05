@@ -11,10 +11,28 @@ public class Main {
         creareTop20(library);
         update(library, "Book12", 100);
         System.out.println();
+    //    sort(library);
         show(library.archive);
         System.out.println();
         show(library.top20);
+
     }
+
+//    private static void sort(Library library) {
+//        for (int i = 0; i < library.archive.size(); i++) {
+//            for (int j = i; j < library.archive.size(); j++) {
+//                if(library.archive.get(i).getNoOfDownloads()>= library.archive.get(j).noOfDownloads){
+//                    MediaEntity a=library.archive.get(i);
+//                    library.archive.set(i,library.archive.get(j));
+//                    library.archive.set(j,a);
+//                }
+//            }
+//        }
+//        for (int i = 0; i < library.archive.size(); i++) {
+//            System.out.println(library.archive.get(i).getTitle() + " " + library.archive.get(i).getNoOfDownloads());
+//        }
+//
+//        }
 
     private static void videoEntity(Library library) {
         System.out.println("all the media entities that are of type video");

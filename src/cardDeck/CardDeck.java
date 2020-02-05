@@ -5,7 +5,6 @@ import java.util.*;
 public class CardDeck {
     List<Card> cards = new ArrayList<>();
     List<Card> used = new ArrayList<>();
-    //   List<Card> allCards = new ArrayList<>();
 
     void allCardsAfisare() {
         for (int j = 0; j < cards.size(); j++) {
