@@ -76,16 +76,16 @@ public class MainBuilding {
         for (int i = 0; i < listOfBuildings.size(); i++) {
             if (listOfBuildings.get(i).getCategory().equals(Building.Category.HOSPITAL)) {
                 contorHospital++;
-                mediaHospital = (mediaHospital + listOfBuildings.get(i).price) / contorHospital;
+                mediaHospital = (mediaHospital + listOfBuildings.get(i).getPrice()) / contorHospital;
             } else if (listOfBuildings.get(i).getCategory().equals(Building.Category.RELIGIOUS)) {
                 contorReligious++;
-                mediaReligious = (mediaReligious + listOfBuildings.get(i).price) / contorReligious;
+                mediaReligious = (mediaReligious + listOfBuildings.get(i).getPrice()) / contorReligious;
             } else if (listOfBuildings.get(i).getCategory().equals(Building.Category.RESIDENTIAL)) {
                 contorResidential++;
-                mediaRessidential = (mediaRessidential + listOfBuildings.get(i).price) / contorResidential;
+                mediaRessidential = (mediaRessidential + listOfBuildings.get(i).getPrice()) / contorResidential;
             } else if (listOfBuildings.get(i).getCategory().equals(Building.Category.OFFICE)) {
                 contorOffice++;
-                mediaOffice = (mediaOffice + listOfBuildings.get(i).price) / contorOffice;
+                mediaOffice = (mediaOffice + listOfBuildings.get(i).getPrice()) / contorOffice;
             }
 
         }
@@ -110,19 +110,19 @@ public class MainBuilding {
         for (int i = 0; i < listOfBuildings.size(); i++) {
             if (listOfBuildings.get(i).getNeighborhood().equals("Cartier1")) {
                 contorCartier1++;
-                mediaCartier1 = (mediaCartier1 + listOfBuildings.get(i).price) / contorCartier1;
+                mediaCartier1 = (mediaCartier1 + listOfBuildings.get(i).getPrice()) / contorCartier1;
 
             } else if (listOfBuildings.get(i).getNeighborhood().equals("Cartier2")) {
                 contorCartier2++;
-                mediaCartier2 = (mediaCartier2 + listOfBuildings.get(i).price) / contorCartier2;
+                mediaCartier2 = (mediaCartier2 + listOfBuildings.get(i).getPrice()) / contorCartier2;
 
             } else if (listOfBuildings.get(i).getNeighborhood().equals("Cartier3")) {
                 contorCartier3++;
-                mediaCartier3 = (mediaCartier3 + listOfBuildings.get(i).price) / contorCartier3;
+                mediaCartier3 = (mediaCartier3 + listOfBuildings.get(i).getPrice()) / contorCartier3;
 
             } else if (listOfBuildings.get(i).getNeighborhood().equals("Cartier4")) {
                 contorCartier4++;
-                mediaCartier4 = (mediaCartier4 + listOfBuildings.get(i).price) / contorCartier4;
+                mediaCartier4 = (mediaCartier4 + listOfBuildings.get(i).getPrice()) / contorCartier4;
 
             }
         }
@@ -140,7 +140,7 @@ public class MainBuilding {
     private static void uniqueNbhd(ArrayList<Building> listOfBuildings) {
         Set<String> nbhd = new HashSet<>();
         for (int i = 0; i < listOfBuildings.size(); i++) {
-            nbhd.add(listOfBuildings.get(i).neighborhood);
+            nbhd.add(listOfBuildings.get(i).getNeighborhood());
         }
         System.out.println(nbhd);
     }
