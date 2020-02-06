@@ -47,7 +47,7 @@ public class MainBuilding {
         building6.setCategory(Building.Category.OFFICE);
         building5.setPrice(500);
         building6.setPrice(600);
-        building5.setNeighborhood("Cartier1");
+        building5.setNeighborhood("Cartier6");
         building6.setNeighborhood("Cartier3");
 
         listOfBuildings.add(building1);

@@ -1,14 +1,12 @@
 package stockmarket;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
         StockMarket stockMarket = new StockMarket();
         LocalDate d1 = LocalDate.of(2019, 1, 1);
-        StockUpdate stockUp1 = new StockUpdate("AMZN", d1, 100);
+        StockUpdate stockUp1 = new StockUpdate("AMZNn", d1, 100);
         stockMarket.add(stockUp1);
         LocalDate d2 = LocalDate.of(2019, 3, 3);
         StockUpdate stockUp2 = new StockUpdate("AMZN", d2, 200);
@@ -20,6 +18,11 @@ public class Main {
         StockUpdate stockUp4 = new StockUpdate("AMZN", d4, 400);
         stockMarket.add(stockUp4);
 
-        stockMarket.queryUpdates(d2, d4);
+        stockMarket.queryUpdates(d1, d4);
+
+        stockMarket.queryUpdates(d1, d4, "AMZN");
+        stockMarket.getPrice(d1, "AMZN");
+        stockMarket.getPrices(d4);
+
     }
 }
