@@ -3,16 +3,17 @@ package stockmarket;
 import java.time.LocalDate;
 import java.util.*;
 
-public class StockMarket {
+public class StockMarket implements Comparable<StockMarket>{
 
     List<StockUpdate> updates = new ArrayList<>();
+    TreeSet<StockUpdate> tree = new TreeSet<>();
+    Map<String, Double> price = new HashMap<>();
+    void addd(StockUpdate update) {
 
-    void add(StockUpdate update) {
         updates.add(update);
-//        for (int i = 0; i < updates.size(); i++) {
-//            System.out.println(updates.get(i).getStockCode() + " " + updates.get(i).getPriceNote() + " " + updates.get(i).getTimeOfTheUpdate());
-//        }
-    }
+
+        }
+
 
     List<StockUpdate> queryUpdates(LocalDate from, LocalDate to) {
         List<StockUpdate> queryUpdates = new ArrayList<>();
@@ -42,22 +43,25 @@ public class StockMarket {
     }
 
     Double getPrice(LocalDate date, String stockCode) {
-
-        TreeSet<LocalDate> tree = new TreeSet<>();
-        for (int i = 0; i < updates.size(); i++) {
-            if (updates.get(i).getTimeOfTheUpdate().isEqual(date) && updates.get(i).getStockCode().equals(stockCode)) {
-                System.out.println("Pretul stocului de pe data specificata este :" + updates.get(i).getPriceNote());
-            } else {
-                tree.add(updates.get(i).getTimeOfTheUpdate());
-                tree.ceiling(updates.get(i).getTimeOfTheUpdate());
-            }
+        
+tree.addAll(updates);
+        Iterator<StockUpdate> itr=tree.iterator();
+        while(itr.hasNext()){
+            System.out.println(itr.next());
         }
-
-        return null;
+        for (int i = 0; i < updates.size(); i++) {
+                if (updates.get(i).getTimeOfTheUpdate().isEqual(date) && updates.get(i).getStockCode().equals(stockCode)) {
+                    System.out.println("Pretul stocului de pe data specificata este :" + updates.get(i).getPriceNote());
+                } else {
+                    tree.add(updates.get(i));
+                    tree.ceiling(updates.get(i));
+                }
+            }
+    return null;
     }
 
     Map<String, Double> getPrices(LocalDate date) {
-        Map<String, Double> price = new HashMap<>();
+
         price.put("AMZN", 105.0);
 
         Iterator<Map.Entry<String, Double>> itr = price.entrySet().iterator();
@@ -67,5 +71,10 @@ public class StockMarket {
 
         }
         return null;
+    }
+
+    @Override
+    public int compareTo(StockMarket o) {
+        return 0;
     }
 }
