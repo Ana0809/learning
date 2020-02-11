@@ -1,7 +1,6 @@
 package stockmarket;
 
 import java.time.LocalDate;
-import java.util.TreeSet;
 
 public class Main {
     public static void main(String[] args) {
@@ -15,16 +14,20 @@ public class Main {
         stockMarket.addd(stockUp2);
         LocalDate d3 = LocalDate.of(2020, 5, 4);
         StockUpdate stockUp3 = new StockUpdate("MSFT", d3, 300);
-      stockMarket.addd(stockUp3);
+        stockMarket.addd(stockUp3);
         LocalDate d4 = LocalDate.of(2021, 5, 4);
         StockUpdate stockUp4 = new StockUpdate("AMZN", d4, 400);
         stockMarket.addd(stockUp4);
+        StockUpdate stockUp5 = new StockUpdate("MSFT", d4, 300);
+        stockMarket.addd(stockUp5);
 
         stockMarket.queryUpdates(d1, d4);
-
         stockMarket.queryUpdates(d1, d4, "AMZN");
+
         stockMarket.getPrice(d1,"AMZN");
-       // stockMarket.getPrices(d4);
+
+     //   System.out.println(stockMarket.tree.ceiling(d1));
+        stockMarket.getPrices(d4);
 
     }
 }

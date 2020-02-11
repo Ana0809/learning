@@ -1,11 +1,12 @@
 package stockmarket;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
-public class StockUpdate {
+public class StockUpdate implements Comparable<StockUpdate> {
     String stockCode;
     LocalDate timeOfTheUpdate;
-    int priceNote;
+    double priceNote;
 
     StockUpdate(String stockCode, LocalDate timeOfTheUpdate, int priceNote) {
         this.stockCode = stockCode;
@@ -29,13 +30,34 @@ public class StockUpdate {
         this.timeOfTheUpdate = timeOfTheUpdate;
     }
 
-    public int getPriceNote() {
+    public double getPriceNote() {
         return priceNote;
     }
 
-    public void setPriceNote(int priceNote) {
+    public void setPriceNote(double priceNote) {
         this.priceNote = priceNote;
     }
 
+    @Override
+    public int compareTo(StockUpdate o) {
+        return o.getTimeOfTheUpdate().compareTo(timeOfTheUpdate);
+    }
+
+    public boolean equals(Object o) {
+
+        if (o == this) return true;
+        if (!(o instanceof StockUpdate)) {
+            return false;
+        }
+        StockUpdate s = (StockUpdate) o;
+        return priceNote == s.priceNote &&
+                Objects.equals(stockCode, s.stockCode) &&
+                Objects.equals(timeOfTheUpdate, s.timeOfTheUpdate);
+    }
+
+    @Override
+    public int hashCode() {
+        return (int) this.priceNote;
+    }
 
 }
