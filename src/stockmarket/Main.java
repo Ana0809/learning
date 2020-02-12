@@ -24,9 +24,8 @@ public class Main {
         stockMarket.queryUpdates(d1, d4);
         stockMarket.queryUpdates(d1, d4, "AMZN");
 
-        stockMarket.getPrice(d1,"AMZN");
+        stockMarket.getPrice(d3,"AMZN");
 
-     //   System.out.println(stockMarket.tree.ceiling(d1));
         stockMarket.getPrices(d4);
 
     }

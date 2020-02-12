@@ -45,28 +45,19 @@ public class StockMarket {
     Double getPrice(LocalDate date, String stockCode) {
         tree.addAll(updates);
         double price = 0;
-        //varianta 1
-        for (StockUpdate s : tree) {
-            price = s.getPriceNote();
-            if (s.getTimeOfTheUpdate().equals(date) && s.getStockCode().equals(stockCode)) {
-                System.out.println("Pretul stocului de pe data specificata este :" + price);
-            }
-            else {
-//                System.out.println("Stocul nu a fost updatat pe data specificata, aceasta este data cea mai apropiata");
-//                //............
+
+        Iterator<StockUpdate> itrr = updates.iterator();
+        while (itrr.hasNext()) {
+            StockUpdate el = itrr.next();
+            if(el.getTimeOfTheUpdate().equals(date) && el.getStockCode().equals(stockCode)){
+                System.out.println(el.getPriceNote());
+            }else if(!el.getTimeOfTheUpdate().equals(date) && el.getStockCode().equals(stockCode)){
+                StockUpdate data = tree.ceiling(el);
+                if (data != null) {
+                    System.out.println(data.getTimeOfTheUpdate());
+                }
             }
         }
-        //varianta 2
-//        Iterator<StockUpdate> itrr = updates.iterator();
-//        while (itrr.hasNext()) {
-//            StockUpdate el = itrr.next();
-//            if(el.getTimeOfTheUpdate().equals(date) && el.getStockCode().equals(stockCode)){
-//                System.out.println(el.getPriceNote());
-////            }else{
-////                StockUpdate data = tree.ceiling(el);
-////                System.out.println(data.getTimeOfTheUpdate());
-//            }
-//        }
         return price;
     }
 
