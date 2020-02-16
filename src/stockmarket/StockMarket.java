@@ -7,7 +7,7 @@ public class StockMarket {
 
     List<StockUpdate> updates = new ArrayList<>();
     TreeSet<StockUpdate> tree = new TreeSet<>();
-    Map<String,Double> map = new HashMap<>();
+    Map<String, Double> map = new HashMap<>();
 
     void addd(StockUpdate update) {
         updates.add(update);
@@ -45,19 +45,22 @@ public class StockMarket {
     Double getPrice(LocalDate date, String stockCode) {
         tree.addAll(updates);
         double price = 0;
+        StockUpdate s1 = null;
+        for (StockUpdate s : tree) {
+            price = s.getPriceNote();
+            if (s.getTimeOfTheUpdate().equals(date) && s.getStockCode().equals(stockCode)) {
+                System.out.println("Pretul stocului de pe data specificata este :" + price);
 
-        Iterator<StockUpdate> itrr = updates.iterator();
-        while (itrr.hasNext()) {
-            StockUpdate el = itrr.next();
-            if(el.getTimeOfTheUpdate().equals(date) && el.getStockCode().equals(stockCode)){
-                System.out.println(el.getPriceNote());
-            }else if(!el.getTimeOfTheUpdate().equals(date) && el.getStockCode().equals(stockCode)){
-                StockUpdate data = tree.ceiling(el);
-                if (data != null) {
-                    System.out.println(data.getTimeOfTheUpdate());
-                }
+            } else if (!s.getTimeOfTheUpdate().equals(date) && s.getStockCode().equals(stockCode)) {
+                LocalDate d1 = LocalDate.of(2020, 6, 1);
+                StockUpdate stockUpdateee = new StockUpdate(stockCode, d1, 200);
+                s1 = tree.ceiling(stockUpdateee);
             }
         }
+        if (s1 != null) {
+            System.out.println(s1.getTimeOfTheUpdate() + " " + s1.getStockCode() + " " + s1.getPriceNote() + " stocul nu a fost updatat pe data specificata, aceasta este data cea mai apropiata");
+        }
+
         return price;
     }
 
@@ -66,11 +69,10 @@ public class StockMarket {
         Iterator<StockUpdate> itrr = updates.iterator();
         while (itrr.hasNext()) {
             StockUpdate el = itrr.next();
-            if(el.getTimeOfTheUpdate().equals(date)){
+            if (el.getTimeOfTheUpdate().equals(date)) {
                 map.put(el.getStockCode(), el.getPriceNote());
             }
         }
-
         for (Map.Entry<String, Double> entry : map.entrySet()) {
             System.out.println(entry.getKey() + " " + entry.getValue());
         }

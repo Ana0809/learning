@@ -6,6 +6,11 @@ public class Constant implements Sensor{
     Constant(int measure){
         this.measuree=measure;
     }
+
+    @Override
+    public String toString(){
+        return "constant";
+    }
     @Override
     public boolean isOn() {
         return true;
@@ -13,7 +18,7 @@ public class Constant implements Sensor{
 
     @Override
     public void on() {
-
+        System.out.println("Constant sensor on");
     }
 
     @Override
