@@ -1,11 +1,11 @@
 package halfAndPrint;
 
 public class Half implements Function {
-
+    int value;
 
     @Override
     public int evaluate(int myParameter) {
-        int value = myParameter / 2;
+        this.value = myParameter / 2;
         return value;
     }
 }

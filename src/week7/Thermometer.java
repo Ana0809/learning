@@ -4,24 +4,30 @@ import java.util.Random;
 
 public class Thermometer implements Sensor {
     boolean b = true;
+
     @Override
-    public String toString(){
+    public String toString() {
         return "thermometer";
     }
+
     @Override
     public boolean isOn() {
-        return false;
+        if (b == false) {
+            return false;
+        } else
+            return true;
     }
 
     @Override
     public void on() {
         System.out.println("Thermometer sensor on");
+        b=true;
     }
 
     @Override
     public void off() {
         System.out.println("Thermometer is off");
-        b = isOn();
+        b = false;
     }
 
     @Override

@@ -18,12 +18,10 @@ public class Constant implements Sensor{
 
     @Override
     public void on() {
-        System.out.println("Constant sensor on");
     }
 
     @Override
     public void off() {
-
     }
 
     @Override

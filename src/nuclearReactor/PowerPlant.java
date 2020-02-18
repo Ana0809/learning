@@ -1,10 +1,10 @@
 package nuclearReactor;
 
 public class PowerPlant {
-    int output;
+    int desireOutput;
 
     PowerPlant(int output) {
-        this.output = output;
+        this.desireOutput = output;
     }
 
     void alarm(){
@@ -12,6 +12,6 @@ public class PowerPlant {
     }
 
     int methodOutput(){
-        return output;
+        return desireOutput;
     }
 }

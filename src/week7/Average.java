@@ -13,35 +13,29 @@ public class Average implements Sensor {
 
     @Override
     public boolean isOn() {
-        return true;
+        int countTrue = 0;
+        for (int i = 0; i < array.size(); i++) {                                  //The average sensor is on when all of it’s sensors are on
+            Boolean s = array.get(i).isOn();
+            if (s) countTrue++;
+        }
+        if (countTrue == array.size()) {
+            return true;
+        } else return false;
     }
 
     @Override
     public void on() {
-        System.out.println("Average sensor on");
-        for (int i = 0; i < array.size(); i++) {
-            System.out.println(array.get(i).isOn() + " " + array.get(i).toString());  //before
-            Boolean s = array.get(i).isOn();
-            if (!s) {
-                s = true;
-                System.out.println(s + " " + array.get(i).toString() + " sensor on");
-
+        System.out.println("When the average sensor switched on all of its sensors are switched on if not already on");
+            for (int i = 0; i < array.size(); i++) {
+                array.get(i).on();
             }
-        }
-
     }
 
     @Override
     public void off() {
         System.out.println("Average sensor off");
         for (int i = 0; i < array.size(); i++) {
-            System.out.println(array.get(i).isOn() + " " + array.get(i).toString());  //before
-            Boolean s = array.get(i).isOn();
-            if (s) {
-                s = false;
-                System.out.println(s + " " + array.get(i).toString()+" sensor off");
-
-            }
+            array.get(i).off();
         }
     }
 
@@ -67,8 +61,6 @@ public class Average implements Sensor {
 
     public void addSensor(Sensor s) {
         array.add(s);
-//        for(int i=0;i<array.size();i++){
-//            System.out.println(array.get(i).toString());
-//        }
+
     }
 }

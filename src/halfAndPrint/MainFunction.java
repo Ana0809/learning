@@ -12,7 +12,7 @@ public class MainFunction {
 
         Print show = new Print();
         for (int i = 0; i < array.length; i++) {
-            show.prints(array[i]);
+            System.out.println(show.prints(array[i]));
         }
 
 

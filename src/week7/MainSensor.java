@@ -7,7 +7,6 @@ public class MainSensor {
         System.out.println("A constant measure " + constant.measure());
 
         Thermometer thermometer = new Thermometer();
-        thermometer.isOn();
         thermometer.off();
         thermometer.measure();
 
@@ -16,6 +15,9 @@ public class MainSensor {
         average.addSensor(constant2);
         average.addSensor(thermometer);
         System.out.println();
+        if(average.isOn()==true){
+            System.out.println("toti senzorii sunt on");
+        }else System.out.println("Nu toti senzorii sunt on");
         average.on();
         System.out.println();
         average.off();
