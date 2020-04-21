@@ -159,7 +159,6 @@ public class Application1 {
                         String name2 = fileList.get(j);
                         c.setName(name2);
                         d.getCities().add(c);
-
                         c.setHotels(new ArrayList<>());
                         for (int k = j + 1; k < fileList.size(); k++) {
                             if (fileList.get(k).startsWith("H-")) {

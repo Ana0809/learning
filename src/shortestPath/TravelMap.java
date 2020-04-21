@@ -93,7 +93,7 @@ public class TravelMap {
                     child = parent;
                 }
                 System.out.println(path);
-                System.out.println("The path costs: " + shortestPathMap.get(end));
+                System.out.println("Ruta are: " + shortestPathMap.get(end) + " minute");
                 return;
             }
             currentNode.visit();

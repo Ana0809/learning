@@ -2,25 +2,27 @@ package Algoritmica;
 
 public class Merge {
 
-    public static void main (String[] args)
-    {
-        int[] array1 = {1, 2, 3, 4, 9,10};
-        int[] array2 = {11, 12, 13,14, 15, 18};
-        int[] array3 = new int[array1.length + array2.length];
-        int i = 0, j = 0, k = 0;
-        while (i<array1.length && j <array2.length)
-        {
-            if (array1[i] < array2[j])
-                array3[k++] = array1[i++];
-            else
-                array3[k++] = array2[j++];
-        }
-        while (i < array1.length)
-            array3[k++] = array1[i++];
-        while (j < array2.length)
-            array3[k++] = array2[j++];
+    public static void main(String[] args) {
+        int[] n = {5, 0, 15, 20, 3};
+        sort(n);
+        for (int i = 0; i < n.length; i++)
+            System.out.println(n[i]);
+    }
 
-        for ( i=0; i < array3.length; i++)
-            System.out.print(array3[i] + " ");
+    public static void sort(int[] arr) {
+        int n = arr.length;
+        for (int i = 0; i < n - 1; i++) {
+            int min = i;
+            for (int j = i + 1; j < n; j++) {
+                if (arr[j] < arr[min]) {
+                    min = j;
+                }
+            }
+            int temp = arr[min];
+            arr[min] = arr[i];
+            arr[i] = temp;
+
+        }
     }
 }
+

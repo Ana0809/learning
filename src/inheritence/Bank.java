@@ -3,6 +3,7 @@ package inheritence;
 import java.util.ArrayList;
 
 public class Bank {
+
     String nume;
      private ArrayList<Account> accs;
 

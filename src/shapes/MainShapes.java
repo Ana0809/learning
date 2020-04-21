@@ -32,6 +32,5 @@ public class MainShapes {
         if(circle.isLargerThan(triangle)==false){
             System.out.println("Aria cercului este mai mare decat aria triunghiului");
         }else System.out.println("Aria triunghiului este mai mare decat aria cercului");
-
     }
 }
