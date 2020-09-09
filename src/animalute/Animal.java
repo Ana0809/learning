@@ -31,7 +31,7 @@ class Animal {
     }
 
     public void make_speak() {
-        if (stomach_contents == null) {
+        if (stomach_contents.length == 0 ) {
             System.out.print("\n Hello, I am a " + species_name + " called " + animal_name
                     + "\n My stomach is empty" + "\n");
         } else {

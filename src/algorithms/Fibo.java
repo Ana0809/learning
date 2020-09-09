@@ -2,7 +2,7 @@ package algorithms;
 
 public class Fibo {
     public static void main(String[] args) {
-  sumaN(4);
+  sumaN(75);
     }
     public static int sumaN(int n)
     {

@@ -10,4 +10,5 @@ public class Singleton {
          System.out.println("obiectul meu");
         return s;
     }
+
 }

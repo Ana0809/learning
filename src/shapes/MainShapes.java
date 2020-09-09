@@ -29,7 +29,7 @@ public class MainShapes {
         for (int i = 0; i < shapesArray.length; i++) {
             System.out.println("Formele afisate din array sunt: " + shapesArray[i].name());
         }
-        if(circle.isLargerThan(triangle)==false){
+        if(!circle.isLargerThan(triangle)){
             System.out.println("Aria cercului este mai mare decat aria triunghiului");
         }else System.out.println("Aria triunghiului este mai mare decat aria cercului");
     }

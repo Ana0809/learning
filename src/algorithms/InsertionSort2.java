@@ -2,17 +2,17 @@ package algorithms;
 
 public class InsertionSort2 {
     public static void main(String args[]) {
-        int v[] = {12, 11, 13, 6, 5};
+        int v[] = {7, 2, 8, 9, 3, 13, 1};
 
         for (int i = 1; i < v.length; i++) {
-            int elementCurent=v[i];
-            int pozitieCurenta=i-1;
-            while(pozitieCurenta>=0 && elementCurent<v[pozitieCurenta])
+            int y=v[i];
+            int x=i-1;
+            while(x>=0 && y<v[x]) //v[i]<v[i-1]
             {
-                v[pozitieCurenta+1]=v[pozitieCurenta];
-                pozitieCurenta--;
+                v[x+1]=v[x];
+                x--;
             }
-            v[pozitieCurenta+1]=elementCurent;
+            v[x+1]=y;
         }
 
         for (int i = 0; i < v.length; i++) {

@@ -2,29 +2,28 @@ package algorithms;
 
 public class merge {
     public static void main(String[] args) {
-        int[] array1 = {1, 2, 3, 4, 9,10};
-        int[] array2 = {11, 12, 13,14, 15, 18};
-        int[] array3=new int[array1.length+array2.length];
-        int k=0;
-        int m=0;
-        int n=0;
-        while(m<array1.length&&n<array2.length){
-            if(array1[m]<array2[n]) {
-                array3[k++] = array1[m];
-                m++;
-            }
-          else
-                array3[k++]=array1[n++];
+        int a[] = {0, 3, 5};
+        int b[] = {2, 4, 6,7};
+        int c[] = new int[a.length + b.length];
+        int k = 0;
+        int i = 0;
+        int j = 0;
+        while (i < a.length && j < b.length) {
+            if (a[i] < b[j]) {
+                c[k++] = a[i++];
 
+            } else {
+                c[k++] = b[j++];
+            }
         }
-        while(m<array1.length){
-            array3[k++]=array1[m++];
+        while(i<a.length){
+            c[k++]=a[i++];
         }
-        while(n<array2.length){
-            array3[k++]=array2[n++];
+        while(j<b.length){
+            c[k++]=b[j++];
         }
-        for(int i=0;i<array3.length;i++){
-            System.out.println(array3[i]);
+        for (int z = 0; z < c.length; z++) {
+            System.out.println(c[z]);
         }
     }
 }
